@@ -1,0 +1,9 @@
+---
+
+packages:
+  nginx:
+    state: present
+  firewalld:
+    state: present
+  wget:
+    state: absent

@@ -1,0 +1,21 @@
+---
+- name: install nginx and firewalld
+  apt:
+    name: "{{ item.key }}"
+    state: "{{ item.value.state }}"
+    update_cache: yes
+  loop: "{{ packages | dict2items  }}"
+
+- name: open http
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+  register: port_open
+
+- name: restart firewall
+  service:
+    name: firewalld
+    state: restarted
+  when: port_open.changed
+
